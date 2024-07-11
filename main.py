@@ -1,5 +1,13 @@
+from openai import OpenAI
 import requests
 from bs4 import BeautifulSoup 
+from tokens import YOUR_API_TOKEN, YOUR_ORG_TOKEN
+
+
+client = OpenAI(
+    organization=YOUR_ORG_TOKEN,
+    api_key=YOUR_API_TOKEN
+    )
 
 
 def getContent(url):
@@ -8,28 +16,40 @@ def getContent(url):
     soup = BeautifulSoup(request.content, 'html.parser')
     return soup
 
-def getLinks(soup, tag, class_):
+def getHeadlines(soup, tag, class_):
     ret_arr = []
+    # return soup.find(tag, class_=class_)
     for links in soup.find_all(tag, class_=class_):
-        ret_arr.append(links.get('href'))
+        ret_arr.append(links.get_text())
     return ret_arr
 
-def getParagraphs(soup, tag, class_):
-    ret_arr = []
-    paragraphs = soup.find(tag, class_=class_)
-    for lines in paragraphs.get_text().splitlines():
-        if lines == ' I Made It':
-            break
-        if lines != ' Dotdash Meredith Food Studios' and lines != 'Jump to Nutrition Facts' and lines != '':
-            ret_arr.append(lines)
-    return ret_arr    
+
+def getSummary(headLine):
+
+    response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {
+        "role": "system",
+        "content": "Summarize content you are provided with."
+        },
+        {
+        "role": "user",
+        "content": headLine
+        }
+    ],
+    temperature=0.7,
+    max_tokens=110,
+    top_p=1
+    )
+    return response.choices[0].message.content
+ 
         
 
 if __name__ == "__main__":
-    soup = getContent('https://www.allrecipes.com/classic-appetizers-for-summer-8653298')
-    links = getLinks(soup, 'a', "mntl-sc-block-universal-featured-link__link mntl-text-link button--contained-standard type--squirrel")
-    for recepies in links:
-        sub_soup = getContent(recepies)
-        paragraphs = getParagraphs(sub_soup, 'div', 'comp article-content mntl-block')
-        print(paragraphs)
-        print('\n')
+    soup = getContent('https://edition.cnn.com/')
+    headlines = getHeadlines(soup, 'span', "container__headline-text")
+    # print(headlines)
+    print(headlines[15])
+    print(getSummary("CNN article: " + headlines[15]))
+   
