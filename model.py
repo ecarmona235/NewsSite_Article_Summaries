@@ -23,14 +23,14 @@ def getHeadlines(soup, tag, class_):
     return ret_arr
 
 
-def getSummary(headLine, site):
-
+def getSummary(headLine: str, site: str):
+    content = f"Explain to me the given article from {site.upper()} in a simple way."
     response = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
         {
         "role": "system",
-        "content": "Explain to me the given article from {site} in a simple way."
+        "content": content
         },
         {
         "role": "user",
@@ -42,8 +42,20 @@ def getSummary(headLine, site):
     top_p=1
     )
     return response.choices[0].message.content
+
+def getSiteInfo(site:str):
+    if site.lower() == 'cnn':
+        return ['cnn', 'https://edition.cnn.com/,', 'span', 'container__headline-text', 0]
+    elif site.lower() == 'nbc':
+        return ['nbc', 'https://www.nbcnews.com/', 'div', 'related-content-tease__headline', 0]
+    elif site.lower() == 'ap' or site.lower() == 'associated-press':
+        return ['associated-press', 'https://apnews.com/', 'span', 'PagePromoContentIcons-text', 1]
+    elif site.lower() == 'times' or site.lower() == 'ny-times' :
+        return ['ny-times', 'https://www.nytimes.com/#site-content', 'div', 'css-xdandi', -5]
+    else:
+        return [] # error - unlikely should be caught before this.
+    
  
-        
 
 if __name__ == "__main__":
     soup = getContent('https://edition.cnn.com/')

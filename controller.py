@@ -1,4 +1,5 @@
 from flask import Flask, request, make_response, jsonify
+from model import *
 
 
 app = Flask(__name__)
@@ -19,6 +20,17 @@ class APIError(Exception):
         rv = dict(self.payload or ())
         rv['Error'] = self.message
         return rv
+    
+class User:
+    def __init__(self, info_list,request_n):
+        self.site = info_list[0]
+        self.address = info_list[1]
+        self.tag = info_list[2]
+        self.html_class = info_list[3]
+        self.numb_requested = request_n
+        self.skips = info_list[4]
+        
+    
 
 @app.errorhandler(APIError)
 def handle_API_errors(error):
@@ -36,9 +48,18 @@ def user(newssite: str, n_articles: str):
         # send response.
         if newssite.lower() not in newsites:
             raise APIError("Site provided either not supported or mispelled.", status_code=400)
-        elif not n_articles.isnumeric() or int(n_articles) <= 0:
+        if not n_articles.isnumeric() or int(n_articles) <= 0:
             raise  APIError("Problem with n_articles provided. Either not a number or below 1.", status_code=400)
-            
+        else:
+            newUser = User(getSiteInfo(newssite), int(n_articles))
+            # content_list = get content
+            # headlines list = get headlines
+            #   error handling if list is empty
+            # loop
+                # get summaries 
+                # save summary
+            # jsonify response
+            # send response 
         return "Hello!"
 
 
