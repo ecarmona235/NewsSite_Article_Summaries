@@ -11,12 +11,11 @@ client = OpenAI(
 
 
 def getContent(url):
-    
     request = requests.get(url=url)
     soup = BeautifulSoup(request.content, 'html.parser')
     return soup
 
-def getHeadlines(soup, tag, class_):
+def getHeadlines(soup: BeautifulSoup, tag, class_):
     ret_arr = []
     for links in soup.find_all(tag, class_=class_):
         ret_arr.append(links.get_text())
@@ -63,7 +62,7 @@ if __name__ == "__main__":
     print(headlines)
     # print(getSummary(headlines[1], 'NY Times'))
     
-    
+    # test cnn again there is an issue
     # CNN - https://edition.cnn.com/, tag = 'span' , class = container__headline-text
     # NBC - https://www.nbcnews.com/ tag=div class=related-content-tease__headline
     # Associated Press - https://apnews.com/ tag=span class= PagePromoContentIcons-text, skip index 0-1

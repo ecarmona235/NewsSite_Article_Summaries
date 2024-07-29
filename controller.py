@@ -23,12 +23,12 @@ class APIError(Exception):
     
 class User:
     def __init__(self, info_list,request_n):
-        self.site = info_list[0]
-        self.address = info_list[1]
-        self.tag = info_list[2]
-        self.html_class = info_list[3]
-        self.numb_requested = request_n
-        self.skips = info_list[4]
+        self.site : str = info_list[0]
+        self.address : str = info_list[1]
+        self.tag: str = info_list[2]
+        self.html_class :str = info_list[3]
+        self.numb_requested : str = request_n
+        self.skips : int = info_list[4]
         
     
 
@@ -42,9 +42,7 @@ def handle_API_errors(error):
 @app.route('/news/<newssite>/<n_articles>', methods=['GET'])
 def user(newssite: str, n_articles: str):
     if request.method == 'GET':
-        # run through model 
-        # error handling for proper response from model
-        # jsonify response
+        # jsonify res
         # send response.
         if newssite.lower() not in newsites:
             raise APIError("Site provided either not supported or mispelled.", status_code=400)
@@ -52,17 +50,19 @@ def user(newssite: str, n_articles: str):
             raise  APIError("Problem with n_articles provided. Either not a number or below 1.", status_code=400)
         else:
             newUser = User(getSiteInfo(newssite), int(n_articles))
-            # content_list = get content
-            # headlines list = get headlines
-            #   error handling if list is empty
-            # loop
-                # get summaries 
-                # save summary
-            # jsonify response
+            soup = getContent(newUser.address)
+            headlines_list= getHeadlines(soup, tag=newUser.tag, class_=newUser.html_class)
+            if len(headlines_list) == 0:
+                raise(APIError("There has been a server error. No headlines were returned.", status_code=500))
+            for index in range(0, newUser.numb_requested):
+                # check for skipping here, and skip in the front or back depending on number
+                print(getSummary(headlines_list[index], newUser.site))
+                # check summary if None internal error, else save the summary
+            # jsonify responses
             # send response 
         return "Hello!"
 
 
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(port=5007)
