@@ -57,15 +57,8 @@ def getSiteInfo(site:str):
  
 
 if __name__ == "__main__":
-    soup = getContent('https://edition.cnn.com/')
-    headlines = getHeadlines(soup, 'span', "container__headline-text")
-    print(headlines)
-    # print(getSummary(headlines[1], 'NY Times'))
-    
-    # test cnn again there is an issue
-    # CNN - https://edition.cnn.com/, tag = 'span' , class = container__headline-text
-    # NBC - https://www.nbcnews.com/ tag=div class=related-content-tease__headline
-    # Associated Press - https://apnews.com/ tag=span class= PagePromoContentIcons-text, skip index 0-1
-    # NY times - https://www.nytimes.com/#site-content, tag=div class= css-xdandi -skip last 5
+    soup = getContent('https://www.nbcnews.com/')
+    headlines = getHeadlines(soup, 'div', "related-content-tease__headline")
+    print(getSummary(headlines[1], 'NBC'))
     
    

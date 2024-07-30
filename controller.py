@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, jsonify
 from model import *
 
 
@@ -52,17 +52,21 @@ def user(newssite: str, n_articles: str):
             newUser = User(getSiteInfo(newssite), int(n_articles))
             soup = getContent(newUser.address)
             headlines_list= getHeadlines(soup, tag=newUser.tag, class_=newUser.html_class)
+            stories_dict = {}
             if len(headlines_list) == 0:
                 raise(APIError("There has been a server error. No headlines were returned.", status_code=500))
             for index in range(0, newUser.numb_requested):
-                # check for skipping here, and skip in the front or back depending on number
-                print(getSummary(headlines_list[index], newUser.site))
-                # check summary if None internal error, else save the summary
-            # jsonify responses
-            # send response 
-        return "Hello!"
+                if newUser.skips > 0 and index < newUser.skips:
+                    continue
+                elif newUser.skips < 0 and index == abs(newUser.skips + len(headlines)):
+                    break
+                else:
+                    stories_dict[headlines_list[index]] = getSummary(headlines_list[index], newUser.site)
+                    if stories_dict[headlines_list[index]] is None:
+                        raise (APIError("There has been a server error. No summary was returned.", status_code=500))
+            return jsonify({f'News article from: {newUser.site.upper()}': stories_dict})
 
 
 
 if __name__ == "__main__":
-    app.run(port=5007)
+    app.run(port=5009)
