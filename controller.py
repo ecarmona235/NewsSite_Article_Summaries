@@ -64,9 +64,9 @@ def user(newssite: str, n_articles: str):
                     stories_dict[headlines_list[index]] = getSummary(headlines_list[index], newUser.site)
                     if stories_dict[headlines_list[index]] is None:
                         raise (APIError("There has been a server error. No summary was returned.", status_code=500))
-            return jsonify({f'News article from: {newUser.site.upper()}': stories_dict})
+            return jsonify({f'{newUser.site.upper()} news articles': stories_dict})
 
 
 
 if __name__ == "__main__":
-    app.run(port=5009)
+    app.run(port=5022)
