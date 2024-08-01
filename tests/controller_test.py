@@ -1,3 +1,4 @@
+# Last edited: 08/01/2024
 import unittest
 from controller import *
 # import pytest
@@ -5,6 +6,8 @@ from controller import *
 
 
 class TestControlller(unittest.TestCase):
+    """ Test class for controller file. 
+    """
     
 
     
@@ -17,6 +20,9 @@ class TestControlller(unittest.TestCase):
         Self.assertEqual(test_user.html_class, 'related-content-tease__headline')
         Self.assertEqual(test_user.skips, 0)
         Self.assertEqual(test_user.numb_requested, 5)
+        
+        
+    # TODO: Figure out how to test the user api calls. 
         
     
     

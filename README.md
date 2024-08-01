@@ -1,16 +1,25 @@
-# Python_Web_Scaper
-# Project Name
+# News Site Article Summaries
 
 A paragraph containing a high-level description of the project, main features and remarks.
 
 ## Requirements
 
-Here you should give a general idea of what a user will need in order to use your library or application. List requirements and then link to another resource with detailed installation or setup instructions.
+Requirements.txt should give you all necessarry requirements. 
 
-- Requirement one
-- Another requirement
+`$: pip install -r requirements.txt`
+
+Another requirement is to have an account with openAI and have your tokens given to you
+by openAI in a file named tokens.py.
+The file should have just two variables.
+`YOUR_ORG_TOKEN = str(your org token from openAI)`
+`YOUR_API_TOKEN =str(your org token from openAI)`
+These will be utilized by the API. 
+
+*Keep tokens hidden at all times and do not upload them anywhere public.*
 
 
 ## Usage
 
-Include here a few examples of commands you can run and what they do. Finally link out to a resource to learn more (next paragraph).
+TODO: finish filling this part in.
+'cnn', 'nbc', 'ap', 'associated-press', 'times', 'ny-times'
+

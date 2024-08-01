@@ -1,7 +1,9 @@
+# Last edited: 08/01/2024
 import unittest
 from model import *
 
 class TestModel(unittest.TestCase):
+    """Testing for Model file."""
     test_soup = getContent('https://www.nbcnews.com/')
     test_headlines = getHeadlines(test_soup, 'div', 'related-content-tease__headline')
     
