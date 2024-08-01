@@ -1,6 +1,6 @@
 # News Site Article Summaries
 
-A paragraph containing a high-level description of the project, main features and remarks.
+TODO: A paragraph containing a high-level description of the project, main features and remarks.
 
 ## Requirements
 
