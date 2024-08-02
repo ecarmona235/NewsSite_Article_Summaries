@@ -14,8 +14,9 @@ Another requirement is to have an account with openAI and have your tokens given
 by openAI in a file named tokens.py.
 
 The file should have just two variables.
-`YOUR_ORG_TOKEN = str(your org token from openAI)`
-`YOUR_API_TOKEN =str(your org token from openAI)`
+
+    - `YOUR_ORG_TOKEN = str(your org token from openAI)`
+    - `YOUR_API_TOKEN =str(your org token from openAI)`
 
 These will be utilized by the API. 
 
@@ -25,10 +26,10 @@ These will be utilized by the API.
 ## Usage
 
 The application supports the following news sites:
-    CNN 
-    NBC
-    Associated-press or ap
-    New York Times as times or ny-times
+    - CNN 
+    - NBC
+    - Associated-press or ap
+    - New York Times (as times or ny-times)
 
 When making API calls it must contain both the site and number of articles requested. 
 The number of articles requested must be greater than 0.
