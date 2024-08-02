@@ -35,4 +35,4 @@ The number of articles requested must be greater than 0.
 
 Here is a simple example asking for 3 stories from NBC. 
 
-![Image showing an example]( Python_Web_Scraper/Python_Web_Scaper/example.png ("Example"))
+![Image showing an example]( example.png ("Example"))
