@@ -33,6 +33,12 @@ The application supports the following news sites:
 When making API calls it must contain both the site and number of articles requested. 
 The number of articles requested must be greater than 0.
 
+The basic syntax:
+
+`localhost:port_number/news/news_site/number_of_articles`
+
 Here is a simple example asking for 3 stories from NBC. 
 
 ![Image showing an example]( example.png ("Example"))
+
+
